@@ -1,11 +1,15 @@
-import { TableTask } from './components/taskCard/TableTask';
-import Swal from 'sweetalert2'
+import { TableTask } from './components/tableTask/TableTask';
+import { useEffect, useState } from 'react';
+import  { postTask, getTasks} from '../src/request/requestApi'; 
+import Swal from 'sweetalert2';
 import './App.css';
 
 function App() {
+
   const saveTask = async () => {
 
     // llamando a modal 
+    let dataInput = '';
     Swal.fire({
       title: 'Ingresar nueva tarea',
       input: 'text',
@@ -13,6 +17,8 @@ function App() {
       inputValue: '',
       showCancelButton: true,
       inputValidator: (value) => {
+        console.log(value);
+        dataInput= value;
         if (!value) {
           return 'Ingrese algún dato!'
         }
@@ -29,17 +35,18 @@ function App() {
         })
 
         // guardar  la tarea  llamando endpoint
-        const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ descripcion: 'Nueva Tarea', estado: 'pendiente' })
-        };
 
-        fetch('https://flask-api-todo-fpc5.onrender.com/tarea', requestOptions)
-          .then(response => response.json())
-          .then((result) => {
-            console.log(result);
-          });
+        console.log("eliminando");
+        const data = {
+          description: dataInput,
+          status: 'pendiente'
+        } 
+        postTask(data)
+        .then((response) => {
+          console.log(response);
+          getTasks();
+          window.location.reload();
+        });
 
       }
     });
@@ -48,10 +55,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Lista de Tareas</h1>
-      <input />
-      <button className='button-save' type='button' onClick={()=> saveTask()}>Guardar</button>
-      <TableTask/>
+      <h1 className='h1-title'>Lista de Tareas</h1>
+      <input className="input-search" type='text' placeholder='Buscar Tarea.....'/>
+      <button className='button-save' type='button' onClick={()=> saveTask()}>Guardar Tarea Nueva</button>
+      <TableTask  />
     </div>
   );
 }
