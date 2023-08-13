@@ -1,15 +1,16 @@
 import { useState } from "react";
-export const EditTask = (showModalStyle) => {
+export const EditTask = ({showModalStyle}) => {
+    const [changeStyle, setChangeStyle] = useState(showModalStyle);
 
-    const [changeStyleModal, setChangeStyleModal] = useState(showModalStyle)
     const saveEdit = () => {
-     setChangeStyleModal("hidden-modal-edit");
+        // showModalStyle = "hidden-modal-edit";
+     setChangeStyle("hidden-modal-edit");
 
     }
 
 
     return (
-        <div className={changeStyleModal}>
+        <div className={changeStyle}>
             <h1>Editar Tarea</h1>
             <input className="input-edit"/>
             <input className="input-edit" />

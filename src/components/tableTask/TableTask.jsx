@@ -17,7 +17,7 @@ export const TableTask = () => {
 
     const editTask = (task) => {
         updateTask(task);
-        setChangeStyleModal('show-modal-edit')
+        setChangeStyleModal('show-modal-edit');
     };
 
     const completeTask = (id) => {
