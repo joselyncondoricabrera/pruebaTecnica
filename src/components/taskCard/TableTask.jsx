@@ -12,21 +12,28 @@ export const TableTask = () => {
       })
       .then((task) => {        
         setTask(task.content);
-        console.log(task.content)
-
+        // console.log(task.content);
       })
-
     },[]);
 
     const editTask = (id) => {
-        console.log(id);
+        
     };
 
     const completeTask = () => {
 
     }
-    const deleteTask = () => {
+    const deleteTask = (id) => {
+        // const requestOptions = {
+        //     method: 'DELETE'
+        // }
 
+        // fetch(`https://flask-api-todo-fpc5.onrender.com/tarea/${id}`, requestOptions)
+        //     .then((response) => {
+        //         console.log("se elimino correctamente");
+
+        //     });
+        console.log(id);
     }
 
 
@@ -50,7 +57,7 @@ export const TableTask = () => {
                         <td className="content-button-action">
                             <button className="button-action btn-edit" type="button" onClick={()=> editTask(id)}>Editar</button>
                             <button className="button-action btn-complete" type="button" onClick={() => completeTask()}>Completar</button>
-                            <button className="button-action btn-delete" type="button" onClick={() => deleteTask()}>Eliminar</button>
+                            <button className="button-action btn-delete" type="button" onClick={() => deleteTask(id)}>Eliminar</button>
                         </td>
                     </tr>
                 ))}
