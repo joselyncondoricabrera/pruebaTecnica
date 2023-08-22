@@ -6,8 +6,17 @@ import './App.css';
 
 function App() {
 
-  const saveTask = async () => {
+  //probando nuevo còdigo
+  const [arrayTask , setArrayTask] = useState([]);
+  useEffect(()=>{
+    getTasks()
+    .then((r)=>{
+      setArrayTask(r.content);
+    });
+  });
+  //---------------------
 
+  const saveTask = async () => {
     // llamando a modal 
     let dataInput = '';
     Swal.fire({
@@ -45,7 +54,6 @@ function App() {
         .then((response) => {
           console.log(response);
           getTasks();
-          window.location.reload();
         });
 
       }
@@ -58,7 +66,7 @@ function App() {
       <h1 className='h1-title'>Lista de Tareas</h1>
       <input className="input-search" type='text' placeholder='Buscar Tarea.....'/>
       <button className='button-save' type='button' onClick={()=> saveTask()}>Guardar Tarea Nueva</button>
-      <TableTask  />
+      <TableTask task = {arrayTask} />
     </div>
   );
 }

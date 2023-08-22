@@ -1,27 +1,34 @@
-import React,{ useEffect, useState } from 'react';
-import {getTasks, deleteTask, updateTask } from '../../request/requestApi';
-import {EditTask} from '../modals/EditTask';
+import React,{ useState } from 'react';
+import { EditTask } from '../modals/EditTask';
+import {deleteTask} from '../../request/requestApi';
+import { useModal } from '../modals/useModal';
 import Swal from 'sweetalert2';
 
-export const TableTask = () => {
-    const [task, setTask] = useState([]);
-    const [valueCheckbox, setValueCheckbox] = useState(false);
-    const [changeStyleModal, setChangeStyleModal] = useState('hidden-modal-edit');
+export const TableTask = ( {task} ) => {
+    // const [task, setTask] = useState([]);
+    // const [valueCheckbox, setValueCheckbox] = useState(false);
+    // const [showModalEdit, setShowModalEdit] = useState(false);
+   
 
-    useEffect(() => {
-        getTasks()
-        .then((response)=>{
-            setTask(response.content);
-        });
-    }, []);
+    const [isOpenModal1, openModal1, closeModal1] = useModal(false);
 
-    const editTask = (task) => {
-        updateTask(task);
-        setChangeStyleModal('show-modal-edit');
+
+    // useEffect(() => {
+    //     getTasks()
+    //     .then((response)=>{
+    //         setTask(response.content);
+    //     });
+    // }, []);
+
+    const editTask = () => {
+        openModal1();
+            
+    //  setShowModalEdit(true);
+    //  console.log(showModalEdit);
     };
 
     const completeTask = (id) => {
-        setValueCheckbox(true);
+        // setValueCheckbox(true);
         // console.log(valueCheckbox);
     }
     const deleteTaskItem = (id) => {
@@ -35,11 +42,11 @@ export const TableTask = () => {
                     .then((response) => {
                         console.log(response);
                         // traer data de la api para mostrar
-                        getTasks()
-                            .then((response) => {
-                                console.log(response);
-                                setTask(response.content);
-                            });
+                        // getTasks()
+                        //     .then((response) => {
+                        //         console.log(response);
+                        //         setTask(response.content);
+                        //     });
 
                     });
                 Swal.fire('Eliminado correctamente!', '', 'success')
@@ -57,8 +64,7 @@ export const TableTask = () => {
  
 
     return(
-        <div>
-            <EditTask showModalStyle = {changeStyleModal}/>
+        <div> 
             <table className="table-task">
                 <thead className='head-table'>
                     <tr>
@@ -76,10 +82,10 @@ export const TableTask = () => {
                             <td>{t.descripcion}</td>
                             {/* <td>{t.title}</td> */}
                             <td>
-                                <input className="input-checkbox" type='checkbox' checked={valueCheckbox === true ? true : false} />
+                                {/* <input className="input-checkbox" type='checkbox' checked={valueCheckbox === true ? true : false} /> */}
                             </td>
                             <td className="content-button-action">
-                                <button className="button-action btn-edit" type="button" onClick={() => editTask(t)}>Editar</button>
+                                <button className="button-action btn-edit"  onClick={()=> {editTask()}}>Editar</button>
                                 <button className="button-action btn-complete" type="button" onClick={() => completeTask(t.id)}>Completar</button>
                                 <button className="button-action btn-delete" type="button" onClick={() => deleteTaskItem(t.id)}>Eliminar</button>
                             </td>
@@ -87,6 +93,11 @@ export const TableTask = () => {
                     ))}
                 </tbody>
             </table>
+
+            <div>
+             {/* {showModalEdit ? <EditTask /> : null}  */}
+             <EditTask isOpen = {isOpenModal1}  closeModal= {closeModal1}/>
+            </div>
         </div>
     );
 }
