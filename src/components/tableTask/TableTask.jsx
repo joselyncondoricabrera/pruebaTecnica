@@ -5,26 +5,16 @@ import { useModal } from '../modals/useModal';
 import Swal from 'sweetalert2';
 
 export const TableTask = ( {task} ) => {
-    // const [task, setTask] = useState([]);
-    // const [valueCheckbox, setValueCheckbox] = useState(false);
-    // const [showModalEdit, setShowModalEdit] = useState(false);
-   
-
     const [isOpenModal1, openModal1, closeModal1] = useModal(false);
+   
+    const [selectTask, setSelectTask] = useState({});
 
-
-    // useEffect(() => {
-    //     getTasks()
-    //     .then((response)=>{
-    //         setTask(response.content);
-    //     });
-    // }, []);
-
-    const editTask = () => {
+    const editTask = (t) => {
+        console.log(t);
+         //tarea seleccionada de la tabla
+        setSelectTask(t);
+        
         openModal1();
-            
-    //  setShowModalEdit(true);
-    //  console.log(showModalEdit);
     };
 
     const completeTask = (id) => {
@@ -85,7 +75,7 @@ export const TableTask = ( {task} ) => {
                                 {/* <input className="input-checkbox" type='checkbox' checked={valueCheckbox === true ? true : false} /> */}
                             </td>
                             <td className="content-button-action">
-                                <button className="button-action btn-edit"  onClick={()=> {editTask()}}>Editar</button>
+                                <button className="button-action btn-edit"  onClick={()=> {editTask(t)}}>Editar</button>
                                 <button className="button-action btn-complete" type="button" onClick={() => completeTask(t.id)}>Completar</button>
                                 <button className="button-action btn-delete" type="button" onClick={() => deleteTaskItem(t.id)}>Eliminar</button>
                             </td>
@@ -95,8 +85,7 @@ export const TableTask = ( {task} ) => {
             </table>
 
             <div>
-             {/* {showModalEdit ? <EditTask /> : null}  */}
-             <EditTask isOpen = {isOpenModal1}  closeModal= {closeModal1}/>
+             <EditTask isOpen = {isOpenModal1}  closeModal= {closeModal1} valueTask={selectTask} />
             </div>
         </div>
     );

@@ -80,7 +80,7 @@
   display: flex;
 }
 .modal-edit{
-  background-color: aqua;
+  background-color: #D0D3D4 ;
   width: 40%;
   height: 50%;
   display: flex;
@@ -121,7 +121,13 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
+}
 
+.input-edit{
+  border: none;
+  width: 80%;
+  height: 25%;
+  outline: none;
 }
 
   
